@@ -13,6 +13,9 @@ const DEMO_FIXTURES = {
   "demo-psg-om": { catalogId: "l0", recipient: "Alexandre", sender: "Sophie" },
   "demo-hellfest": { catalogId: "f0", recipient: "Hugo", sender: "Emma" },
   "demo-rome": { catalogId: "v0", recipient: "Chloé", sender: "Pierre" },
+  "demo-vin-court": { catalogId: "w0c", recipient: "Sophie", sender: "Marc" },
+  "demo-vin-moyen": { catalogId: "w0m", recipient: "Sophie", sender: "Marc" },
+  "demo-vin-long":  { catalogId: "w0l", recipient: "Sophie", sender: "Marc" },
 };
 
 export default function GiftPage() {

@@ -1,6 +1,6 @@
-import { CONCERTS, FIXTURES, FESTIVALS, VOYAGES } from "./data.js";
+import { CONCERTS, FIXTURES, FESTIVALS, VOYAGES, VINS } from "./data.js";
 import { VENUES, CLUBS } from "./data.js";
-import { buildConcert, buildLigue1, buildFestival, buildVoyage } from "./builders.js";
+import { buildConcert, buildLigue1, buildFestival, buildVoyage, buildVinEscape } from "./builders.js";
 import { norm } from "./utils.js";
 
 export const CATALOG = [
@@ -26,6 +26,11 @@ export const CATALOG = [
     emoji: v[3], long: !!v[8],
     build: (recipient, sender) => buildVoyage(v, recipient, sender),
   })),
+  ...VINS.flatMap((w, i) => [
+    { id: `w${i}c`, type: "vin", name: `${w[0]} — ${w[1]}`, place: "Escape Game · 15 min", emoji: w[3], long: false, build: (r, s) => buildVinEscape(w, r, s, "court") },
+    { id: `w${i}m`, type: "vin", name: `${w[0]} — ${w[1]}`, place: "Escape Game · 30 min", emoji: w[3], long: false, build: (r, s) => buildVinEscape(w, r, s, "moyen") },
+    { id: `w${i}l`, type: "vin", name: `${w[0]} — ${w[1]}`, place: "Escape Game · 1 heure", emoji: w[3], long: true,  build: (r, s) => buildVinEscape(w, r, s, "long") },
+  ]),
 ];
 
 export function findById(id) {

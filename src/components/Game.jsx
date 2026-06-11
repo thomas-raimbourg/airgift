@@ -7,6 +7,7 @@ const ACCENTS = {
   ligue1: { a: "#3DDC6A", b: "#27E8E0" },
   festival: { a: "#FFB930", b: "#FF2E92" },
   voyage: { a: "#27E8E0", b: "#9B5CFF" },
+  vin: { a: "#7B1F2E", b: "#C8982A" },
 };
 
 export default function Game({ item, recipient = "Hermann", sender = "Léa", onBack }) {
@@ -175,18 +176,18 @@ export default function Game({ item, recipient = "Hermann", sender = "Léa", onB
                 </div>
                 <div className="flex justify-between items-center px-6 py-4" style={{ background: "rgba(12,1,24,0.85)", borderTop: "2px dashed rgba(255,255,255,0.5)" }}>
                   <div>
-                    <p className="text-xs" style={{ color: "#B68FE8" }}>Places</p>
-                    <p className="font-bold text-lg">2 × Carré Or</p>
+                    <p className="text-xs" style={{ color: "#B68FE8" }}>{game.ticket.dl ?? "Places"}</p>
+                    <p className="font-bold text-lg">{game.ticket.dv ?? "2 × Carré Or"}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs" style={{ color: "#B68FE8" }}>Avec</p>
+                    <p className="text-xs" style={{ color: "#B68FE8" }}>Offert par</p>
                     <p className="font-bold text-lg">{sender} ❤️</p>
                   </div>
                 </div>
               </div>
               <div className="flex gap-3">
                 <button className="flex-1 py-3 rounded-xl font-bold active:scale-95 transition-transform" style={{ background: grad, color: "#1c0533" }}>
-                  Voir mes billets
+                  {game.ticket.cta ?? "Voir mes billets"}
                 </button>
                 <button className="flex-1 py-3 rounded-xl font-bold active:scale-95 transition-transform" style={{ background: "rgba(255,255,255,0.1)", border: "1px solid #5b2a96", color: "#FFF" }}>
                   📹 Partager

@@ -230,3 +230,8 @@ export const VOYAGES = [
   ["Santorin", "nature", "grece", "🌅", "Un croissant de falaises noires couronné de villages blancs, vestige d'une éruption colossale qui aurait englouti une civilisation — et peut-être inspiré le mythe de l'Atlantide.", ["santorin", "santorini"], ["🌋 L'éruption : vers 1600 av. J.-C., l'une des plus violentes de l'Histoire.", "🔵 Coupoles bleues et couchers de soleil à Oia."], "Week-end nature · Grèce", 1],
   ["Côte d'Émeraude", "nature", "france", "🏴‍☠️", "Une côte au nom de pierre précieuse, gardée par une cité corsaire fortifiée dont les habitants se disent « ni Français, ni Bretons »… et par les plus grandes marées d'Europe.", ["cotedemeraude", "lacotedemeraude", "saintmalo"], ["🏴‍☠️ La cité corsaire : Saint-Malo.", "💚 L'émeraude, c'est la couleur de sa mer."], "Week-end nature · Bretagne", 0],
 ];
+
+// [domaine, appellation, region, emoji, sousRegion]
+export const VINS = [
+  ["Jeannin-Naltet", "Mercurey", "Bourgogne", "🍷", "Côte Chalonnaise"],
+];
