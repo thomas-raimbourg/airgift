@@ -9,6 +9,7 @@ const FILTERS = [
   { k: "ligue1", label: "⚽ Ligue 1" },
   { k: "festival", label: "🎪 Festivals" },
   { k: "voyage", label: "✈️ Voyages" },
+  { k: "vin", label: "🍷 Vins" },
 ];
 
 const RECIPIENT = "Hermann";

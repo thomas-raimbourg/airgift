@@ -12,9 +12,9 @@ const NATURE_CONCERT = Q(
 );
 
 export const fakeSurprise = (type, recipient) => ({
-  emoji: type === "ligue1" ? "🧣" : type === "festival" ? "🎫" : type === "voyage" ? "🧳" : "💿",
-  title: type === "ligue1" ? "Surprise… c'est une écharpe !" : type === "festival" ? "Surprise… c'est un porte-clés !" : type === "voyage" ? "Surprise… c'est une valise vide !" : "Surprise… c'est un CD !",
-  text: `Mais non ${recipient}, je rigole. 😏 C'est BEAUCOUP plus gros que ça. Continue…`,
+  emoji: type === "ligue1" ? "🧣" : type === "festival" ? "🎫" : type === "voyage" ? "🧳" : type === "vin" ? "🧃" : "💿",
+  title: type === "ligue1" ? "Surprise… c'est une écharpe !" : type === "festival" ? "Surprise… c'est un porte-clés !" : type === "voyage" ? "Surprise… c'est une valise vide !" : type === "vin" ? "Surprise… c'est du jus de raisin !" : "Surprise… c'est un CD !",
+  text: `Mais non ${recipient}, je rigole. 😏 C'est ${type === "vin" ? "du vrai vin, promis" : "BEAUCOUP plus gros que ça"}. Continue…`,
   button: "Ouf. Continuer",
 });
 
@@ -130,4 +130,202 @@ export function buildVoyage(vg, recipient = "Hermann", sender = "Léa") {
   st.push({ ...Q("Lettres en vrac", "La destination, passée au mixeur :", "La destination…", destA.concat([norm(name)]), [`${emoji} Repense à l'indice bonus.`, `🔤 ${norm(name).length} lettres en tout.`]), scramble: scramble(name) });
   st.push(codeStage(st.length + 1, recipient, sender));
   return { stages: st, ticket: { sur: "Week-end surprise · 2 personnes", big: name.toUpperCase(), sub, emoji } };
+}
+
+export function buildVinEscape(wine, recipient = "Sophie", sender = "Marc", duration = "court") {
+  const [domaine, appellation, region, emoji, sousRegion] = wine;
+
+  // ── Étapes communes aux 3 durées ─────────────────────────────────────────
+
+  const sRegion = Q(
+    "D'où vient ce vin ?",
+    "Les Romains appelaient cette grande région viticole française « Pagus Burgundionum ». Ses Grands Crus sont parmi les vins les plus chers au monde — une seule bouteille de son cru le plus mythique peut se vendre plus de 30 000 € aux enchères.",
+    "La région…",
+    ["bourgogne", "burgundy"],
+    ["🗺️ Située entre la Champagne et le Beaujolais", "🏰 Sa capitale est Dijon", "🍇 Elle produit les plus grands Pinot Noir du monde"]
+  );
+
+  const sCepage = {
+    ...Q(
+      "Le raisin capricieux",
+      "Ce vin rouge est issu du cépage emblématique de Bourgogne. On le surnomme parfois « le raisin des cœurs brisés » : exigeant, sensible aux maladies, il redoute le gel et les excès de chaleur. Thomas Jefferson le considérait comme le meilleur raisin du monde. Mais il donne les vins rouges les plus soyeux et complexes qui soient.",
+      "Le cépage…",
+      ["pinotnoir", "pinot"],
+      ["🍇 Sa peau est fine, son jus naturellement peu coloré", "🌡️ Il préfère les régions fraîches aux pays chauds", "🔤 Deux mots : le premier est un type de conifère, le second est une couleur"]
+    ),
+    surprise: fakeSurprise("vin", recipient),
+  };
+
+  const sCommune = {
+    ...Q(
+      "La cité de Mercure",
+      `Ce vin rouge provient d'une commune de la Côte Chalonnaise dont le nom honore un dieu romain, messager des dieux et protecteur des marchands. Des archéologues y ont mis au jour les fondations d'un temple dédié à ce dieu, datant du Ier siècle après J.-C. Avec plus de 640 hectares de vignes, c'est l'appellation phare de la ${sousRegion}.`,
+      "La commune…",
+      ["mercurey", "mercure"],
+      ["⚡ Ce dieu romain est aussi protecteur des voleurs et des voyageurs…", "🪐 La planète la plus proche du Soleil porte son nom", "🔤 7 lettres, commence par M, finit par EY"]
+    ),
+    surprise: {
+      emoji: "🏛️",
+      title: "Anecdote débloquée !",
+      text: "En 1846, des fouilles sur la colline de Mercurey ont révélé les fondations d'un temple romain dédié à Mercure. Le dieu et ses marchands avaient bien du goût : ils avaient choisi les meilleures pentes viticoles de la région !",
+      button: "Fascinant ! Continuer",
+    },
+  };
+
+  const sAnagramme = {
+    ...Q(
+      "Les lettres s'emmêlent",
+      "Réarrange ces lettres pour retrouver le nom de la commune.",
+      "La commune…",
+      ["mercurey"],
+      ["🔤 7 lettres, commence par M", "📍 C'est aussi le nom d'un dieu romain", "✨ Finit en -EY"]
+    ),
+    scramble: scramble(appellation.toUpperCase()),
+  };
+
+  const sDomaine = Q(
+    "Une affaire de famille",
+    `Ce vin est produit par le Domaine ${domaine}, une propriété familiale implantée à ${appellation} depuis plusieurs générations. « Jeannin » est un diminutif affectueux d'un prénom masculin très répandu en France. Ce prénom est porté par plusieurs rois de France (Jean le Bon, Jean le Grand) et d'innombrables vignerons bourguignons. Quel est ce prénom ?`,
+    "Le prénom…",
+    ["jean"],
+    ["👑 Jean le Bon, Jean le Grand… le prénom des rois de France", "📖 Dans la Bible : Jean-Baptiste et Jean l'Évangéliste", "🔤 4 lettres seulement"]
+  );
+
+  // ── Étapes MOYEN + LONG ───────────────────────────────────────────────────
+
+  const sCisterciens = {
+    ...Q(
+      "Les bâtisseurs de vignes",
+      "Au XIIe siècle, des moines au vêtement blanc installés en Côte d'Or ont révolutionné la viticulture bourguignonne. Ils ont cartographié les meilleurs terroirs, bâti des murs de pierre autour des parcelles d'exception (les fameux « clos ») et développé une méthode d'observation scientifique de la vigne inégalée. Quel est l'ordre monastique fondé à Cîteaux en 1098, à l'origine du Clos de Vougeot ?",
+      "L'ordre monastique…",
+      ["cisterciens", "cistercien", "citeaux"],
+      ["⚪ Ils portaient des robes blanches (contre les Bénédictins en noir)", "🏛️ Leur abbaye-mère est à Cîteaux, en Côte d'Or", "🍷 Ce sont eux qui ont créé le fameux Clos de Vougeot"]
+    ),
+    surprise: {
+      emoji: "📜",
+      title: "Anecdote débloquée !",
+      text: "Les moines cisterciens goûtaient la terre à genoux et observaient chaque parcelle pendant des décennies. Cette rigueur est à l'origine du concept bourguignon de « Climat » (microparcelle) — classé au Patrimoine mondial de l'UNESCO en 2015.",
+      button: "Continuer",
+    },
+  };
+
+  const sCoteChalonnaise = Q(
+    "Entre deux grandes régions",
+    `${appellation} appartient à une sous-région de Bourgogne enclavée entre la Côte d'Or au nord et le Mâconnais au sud. Elle tire son nom d'une ville médiévale commerçante au bord de la Saône, connue pour ses foires et son patrimoine romain.`,
+    "La sous-région (ou la ville qui lui donne son nom)…",
+    ["cotechalonnaise", "chalonnaise", "chalonsursaone", "chalon"],
+    ["🌊 La ville est au bord de la Saône", "🏙️ C'est une ville de Bourgogne-Franche-Comté entre Dijon et Lyon", "🔤 La sous-région s'appelle Côte… quoi ?"]
+  );
+
+  const sCesar = Q(
+    "Message chiffré du caviste",
+    `Le caviste t'a laissé un indice codé. Dans ce code, chaque lettre est remplacée par la lettre suivante dans l'alphabet (A→B, B→C… Z→A). Déchiffre : ${caesar(appellation)}`,
+    "La commune…",
+    [norm(appellation)],
+    ["🔁 Fais l'inverse : recule chaque lettre d'un cran (B→A, C→B…)", "📍 C'est le nom de la commune de ce vin", `🔡 La première lettre décodée est « ${appellation[0].toUpperCase()} »`]
+  );
+
+  // ── Étapes LONG uniquement ────────────────────────────────────────────────
+
+  const sUNESCO = Q(
+    "La consécration mondiale",
+    "En 2015, les vignobles de Bourgogne ont obtenu une reconnaissance internationale exceptionnelle. Leur concept de « Climat » — chaque parcelle de vigne nommée, délimitée et identifiée depuis des siècles — est désormais protégé par une institution de l'ONU. De quelle reconnaissance s'agit-il ?",
+    "La reconnaissance…",
+    ["patrimoinemondial", "unescopatrimoinemondial", "classementunesco"],
+    ["🌍 C'est l'UNESCO qui l'attribue", "🏺 Elle protège les « Climats du vignoble de Bourgogne »", "🎖️ Les Pyramides d'Égypte et Notre-Dame ont aussi ce titre"]
+  );
+
+  const sPremiersCrus = {
+    ...Q(
+      "La noblesse de Mercurey",
+      `${appellation} est l'une des appellations les plus riches de la ${sousRegion}. Ses parcelles les plus nobles portent des noms qui racontent l'histoire locale : « Clos du Roy » (la vigne du roi), « Les Champs Martins » (saint Martin), « Clos l'Évêque » (l'évêque). Combien ${appellation} possède-t-il de parcelles classées Premier Cru ?`,
+      "Le nombre…",
+      ["32", "trentedeux"],
+      ["🔢 C'est un nombre entre 30 et 35", "📍 C'est le plus grand nombre de Premiers Crus de la Côte Chalonnaise", "🔤 Trente-deux"]
+    ),
+    surprise: {
+      emoji: "👑",
+      title: "Anecdote débloquée !",
+      text: "Le « Clos du Roy » de Mercurey doit son nom au roi de France, qui possédait cette parcelle au Moyen Âge. La vigne bourguignonne a toujours été une affaire d'État — et de roi.",
+      button: "Continuer",
+    },
+  };
+
+  const sTaskevin = Q(
+    "La coupe des chevaliers",
+    "Depuis des siècles, les vignerons de Bourgogne utilisent un petit ustensile en argent ou en étain pour évaluer la couleur et la qualité de leur vin, même à la lueur d'une bougie. Sa forme cannelée amplifie les reflets du vin. En 1934, une confrérie a pris cet objet comme emblème et se réunit chaque année au Château du Clos de Vougeot pour célébrer la Bourgogne. Comment s'appelle cet ustensile ?",
+    "L'ustensile…",
+    ["tastevin"],
+    ["🥄 C'est une petite coupe peu profonde, pas un verre à pied", "👁️ Ses cannelures reflètent la lumière pour voir la couleur du vin à la bougie", "🎭 La confrérie s'appelle « Les Chevaliers du… »"]
+  );
+
+  const sFut = {
+    ...Q(
+      "Le bois qui fait le vin",
+      "Après la fermentation, les vins de Bourgogne sont élevés 12 à 18 mois dans des récipients en bois. Ces pièces bourguignonnes (228 litres chacune) sont fabriquées à partir d'un arbre dont le bois à grain fin affine le vin sans le dominer. Les forêts de Tronçais et d'Allier sont réputées pour ce bois. Quel est cet arbre ?",
+      "L'arbre…",
+      ["chene", "futs", "piece"],
+      ["🌳 C'est un arbre majestueux qui peut vivre 500 ans et plus", "🌰 Il produit des glands", "🍷 On dit que le vin est élevé « en fûts de… »"]
+    ),
+    surprise: {
+      emoji: "🪵",
+      title: "Anecdote débloquée !",
+      text: "Une pièce bourguignonne (fût de 228 litres) neuve coûte environ 800 à 1 000 €. Pour un domaine qui produit 20 000 bouteilles, le renouvellement annuel des fûts représente un investissement colossal — et se retrouve dans le prix de chaque bouteille.",
+      button: "Continuer",
+    },
+  };
+
+  // ── Assemblage par durée ──────────────────────────────────────────────────
+
+  const st = [];
+
+  if (duration === "court") {
+    // 5 énigmes + code = 6 total
+    st.push(sRegion, sCepage, sCommune, sAnagramme, sDomaine);
+    st.push({
+      title: "Ouvre la bouteille !",
+      text: `${sender} a verrouillé la bouteille avec un cadenas à 3 chiffres : (nombre de lettres de ton prénom) puis (nombre total d'énigmes de ce jeu, celle-ci comprise) puis (1, comme une unique bouteille à partager).`,
+      ph: "_ _ _",
+      a: [`${recipient.length}61`],
+      isCode: true,
+      hs: [`🔤 ${recipient.toUpperCase()} : compte les lettres.`, `💡 ${recipient.length} … 6 … et combien de bouteilles ?`],
+    });
+  } else if (duration === "moyen") {
+    // 8 énigmes + code = 9 total
+    st.push(sRegion, sCepage, sCisterciens, sCoteChalonnaise, sCommune, sCesar, sAnagramme, sDomaine);
+    st.push({
+      title: "Ouvre la bouteille !",
+      text: `${sender} a verrouillé la bouteille avec un cadenas à 3 chiffres : (nombre de lettres de ton prénom) puis (nombre total d'énigmes, celle-ci comprise) puis (1, comme une unique bouteille).`,
+      ph: "_ _ _",
+      a: [`${recipient.length}91`],
+      isCode: true,
+      hs: [`🔤 ${recipient.toUpperCase()} : compte les lettres.`, `💡 ${recipient.length} … 9 … et combien de bouteilles ?`],
+    });
+  } else {
+    // 12 énigmes + code = 13 total (cadenas 4 chiffres)
+    st.push(sRegion, sCepage, sCisterciens, sUNESCO, sCoteChalonnaise, sCommune, sCesar, sAnagramme, sPremiersCrus, sTaskevin, sFut, sDomaine);
+    st.push({
+      title: "Le Grand Code de la Bouteille",
+      text: `${sender} a verrouillé cette bouteille d'exception avec un cadenas à 4 chiffres : (nombre de lettres de ton prénom) puis (13, nombre total d'énigmes de cette grande quête) puis (1, comme une unique bouteille).`,
+      ph: "_ _ _ _",
+      a: [`${recipient.length}131`],
+      isCode: true,
+      hs: [`🔤 ${recipient.toUpperCase()} : compte les lettres.`, `💡 ${recipient.length} … 13 … et combien de bouteilles ?`],
+    });
+  }
+
+  const durLabel = duration === "court" ? "15 min" : duration === "moyen" ? "30 min" : "1 heure";
+
+  return {
+    stages: st,
+    ticket: {
+      sur: `Vin · Escape Game ${durLabel}`,
+      big: `${appellation.toUpperCase()} ROUGE`,
+      sub: `Domaine ${domaine} · ${sousRegion}`,
+      emoji,
+      dl: "Appellation",
+      dv: `AOC ${appellation} · ${region}`,
+      cta: "🍷 Déboucher la bouteille",
+    },
+  };
 }
